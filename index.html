@@ -234,16 +234,6 @@
                 </li>
 
 
-                <!-- <li class="works-item swiper-slide">
-                    <a href="works-burger.html">
-                        <div class="works-image"><img src="image/work-image7.jpg" alt="ハンバーガーバナー"></div>
-                        <div class="works-body">
-                            <h3 class="works-title">ハンバーガーバナー</h3>
-                            <p class="works-category">自主制作 / Web Banner</p>
-                        </div>
-                    </a>
-                </li> -->
-
 
 
                 <li class="works-item swiper-slide">
@@ -334,63 +324,98 @@
         });
     </script>
 
+
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <script>
-        let skillsSwiper = undefined;
-        let worksSwiper = undefined;
 
-        function initSwipers() {
-            const mediaQuery = window.matchMedia('(max-width: 768px)');
 
-            function handleSwiper(e) {
-                if (e.matches) {
-                    // 768px以下の処理: 未初期化ならSwiperを起動
-                    if (!skillsSwiper) {
-                        skillsSwiper = new Swiper('.skills-swiper', {
-                            slidesPerView: 1,
-                            spaceBetween: 20,
-                            centeredSlides: true,
-                            loop: true,
-                            pagination: {
-                                el: '.skills-swiper .swiper-pagination',
-                                clickable: true,
-                            },
-                        });
-                    }
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Ripples -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery.ripples@0.6.3/dist/jquery.ripples.min.js"></script>
+</body>
+<script src="
+https://cdn.jsdelivr.net/npm/jquery.ripples@0.6.3/dist/jquery.ripples.min.js
+"></script>
+<script>
+$(function () {
 
-                    if (!worksSwiper) {
-                        worksSwiper = new Swiper('.works-swiper', {
-                            slidesPerView: 1,
-                            spaceBetween: 20,
-                            centeredSlides: true,
-                            loop: true,
-                            pagination: {
-                                el: '.works-swiper .swiper-pagination',
-                                clickable: true,
-                            },
-                        });
-                    }
-                } else {
-                    // 769px以上の処理: Swiperが起動中なら破棄
-                    if (skillsSwiper) {
-                        skillsSwiper.destroy(true, true);
-                        skillsSwiper = undefined;
-                    }
+    const $water = $('.skills-bg');
 
-                    if (worksSwiper) {
-                        worksSwiper.destroy(true, true);
-                        worksSwiper = undefined;
-                    }
+    $water.ripples({
+        resolution: 256,
+        dropRadius: 20,
+        perturbance: 0.03,
+        interactive: true
+    });
+
+    setInterval(function () {
+
+        const x = Math.random();
+        const y = Math.random();
+
+        $water.ripples('drop', x, y, 15, 0.02);
+
+    }, 2500);
+
+});
+</script>
+<script>
+    let skillsSwiper = undefined;
+    let worksSwiper = undefined;
+
+    function initSwipers() {
+        const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+        function handleSwiper(e) {
+            if (e.matches) {
+                // 768px以下の処理: 未初期化ならSwiperを起動
+                if (!skillsSwiper) {
+                    skillsSwiper = new Swiper('.skills-swiper', {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                        centeredSlides: true,
+                        loop: true,
+                        pagination: {
+                            el: '.skills-swiper .swiper-pagination',
+                            clickable: true,
+                        },
+                    });
+                }
+
+                if (!worksSwiper) {
+                    worksSwiper = new Swiper('.works-swiper', {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                        centeredSlides: true,
+                        loop: true,
+                        pagination: {
+                            el: '.works-swiper .swiper-pagination',
+                            clickable: true,
+                        },
+                    });
+                }
+            } else {
+                // 769px以上の処理: Swiperが起動中なら破棄
+                if (skillsSwiper) {
+                    skillsSwiper.destroy(true, true);
+                    skillsSwiper = undefined;
+                }
+
+                if (worksSwiper) {
+                    worksSwiper.destroy(true, true);
+                    worksSwiper = undefined;
                 }
             }
-
-            mediaQuery.addEventListener('change', handleSwiper);
-            handleSwiper(mediaQuery);
         }
 
-        initSwipers();
-    </script>
+        mediaQuery.addEventListener('change', handleSwiper);
+        handleSwiper(mediaQuery);
+    }
+
+    initSwipers();
+</script>
 </body>
 
 </html>

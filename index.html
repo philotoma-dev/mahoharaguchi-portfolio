@@ -338,28 +338,70 @@
 <script src="
 https://cdn.jsdelivr.net/npm/jquery.ripples@0.6.3/dist/jquery.ripples.min.js
 "></script>
-<script>
-$(function () {
+<script>$(function () {
 
-    const $water = $('.skills-bg');
+        const $water = $('.skills-bg');
 
-    $water.ripples({
-        resolution: 256,
-        dropRadius: 20,
-        perturbance: 0.03,
-        interactive: true
+        if (!$water.length) return;
+
+        let ripplesStarted = false;
+
+        const observer = new IntersectionObserver(
+            function (entries) {
+
+                entries.forEach(function (entry) {
+
+                    // 画面内に入ったとき
+                    if (entry.isIntersecting && !ripplesStarted) {
+
+                        $water.ripples({
+                            resolution: 256,
+                            dropRadius: 20,
+                            perturbance: 0.03,
+                            interactive: true
+                        });
+
+                        ripplesStarted = true;
+
+                        // 自動波紋
+                        $water.data('rippleTimer', setInterval(function () {
+
+                            const x = Math.random();
+                            const y = Math.random();
+
+                            $water.ripples(
+                                'drop',
+                                x,
+                                y,
+                                15,
+                                0.02
+                            );
+
+                        }, 2500));
+
+                    }
+
+                    // 画面外に出たとき
+                    if (!entry.isIntersecting && ripplesStarted) {
+
+                        clearInterval($water.data('rippleTimer'));
+
+                        $water.ripples('destroy');
+
+                        ripplesStarted = false;
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.1
+            }
+        );
+
+        observer.observe($water[0]);
+
     });
-
-    setInterval(function () {
-
-        const x = Math.random();
-        const y = Math.random();
-
-        $water.ripples('drop', x, y, 15, 0.02);
-
-    }, 2500);
-
-});
 </script>
 <script>
     let skillsSwiper = undefined;

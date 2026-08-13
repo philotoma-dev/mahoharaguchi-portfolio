@@ -11,7 +11,7 @@
                         // 画面内に入ったとき
                         if (entry.isIntersecting && !ripplesStarted) {
                             $water.ripples({
-                                resolution: 256,
+                                resolution: 120,
                                 dropRadius: 20,
                                 perturbance: 0.03,
                                 interactive: true
